@@ -38,6 +38,45 @@ scripts/                              # 運営用スクリプト（受講者は�
 CLAUDE.md                             # Claude Code への作業ルール
 ```
 
+## システム概要図
+
+```mermaid
+flowchart LR
+    Client["クライアント\n(curl など)"]
+    Controller["ExpenseController\n(REST API)"]
+    Service["ExpenseService\n(精算ロジック)"]
+
+    Client -- "POST /expenses/reimburse\nPOST /expenses/total" --> Controller
+    Controller --> Service
+    Service -- "支給額(int)" --> Controller
+    Controller -- "JSON レスポンス" --> Client
+```
+
+## クラス構成図
+
+```mermaid
+classDiagram
+    class ExpenseItem {
+        +Category category
+        +int amount
+    }
+
+    class Category {
+        <<enumeration>>
+        TRANSPORT
+        MEAL
+        OTHER
+    }
+
+    class ExpenseService {
+        +int reimburse(ExpenseItem item)
+        +int total(List~ExpenseItem~ items)
+    }
+
+    ExpenseItem --> Category : uses
+    ExpenseService --> ExpenseItem : uses
+```
+
 ## 進め方
 
 このリポジトリの Issues にタスクが積んであります。Claude Code に「次にやるべきタスクを提案して」と話しかけるところから始めてください。
