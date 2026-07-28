@@ -9,6 +9,6 @@ package com.example.training;
 public record ExpenseItem(Category category, int amount) {
 
     public enum Category {
-        TRANSPORT, MEAL, OTHER
+        TRANSPORT, MEAL, OTHER, LODGING
     }
 }
